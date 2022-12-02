@@ -3,7 +3,10 @@ package raspopov.questioningSpring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import raspopov.questioningSpring.dto.ChoiceDto;
+import raspopov.questioningSpring.dto.InterviewedChoiceDto;
 import raspopov.questioningSpring.dto.InterviewedDto;
+import raspopov.questioningSpring.dto.QuestionDto;
 import raspopov.questioningSpring.entity.InterviewedEntity;
 import raspopov.questioningSpring.mapper.InterviewedMapper;
 import raspopov.questioningSpring.repository.InterviewedChoiceRepo;
@@ -24,6 +27,7 @@ public class InterviewedService {
     private final InterviewedChoiceRepo interviewedChoiceRepo;
 
     public InterviewedDto saveAttempt(InterviewedDto interviewed) {
+        checkQuestionsChoices(interviewed);
         InterviewedEntity interviewedEntity = interviewedMapper.toEntity(interviewed);
         interviewedEntity = interviewedRepo.save(interviewedEntity);
         interviewedChoiceRepo.saveAll(interviewedEntity.getInterviewedChoices());
@@ -42,5 +46,36 @@ public class InterviewedService {
         InterviewedEntity interviewedEntity = interviewedRepo.findById(interviewedId)
                 .orElseThrow(() -> new NoSuchElementException("No such attempt id"));
         return interviewedMapper.toDto(interviewedEntity);
+    }
+
+    private void checkQuestionsChoices(InterviewedDto interviewed) {
+        List<String> violations = new ArrayList<>();
+        int index = 1;
+        for (QuestionDto questionDto : interviewed.getForm().getQuestions()) {
+            List<ChoiceDto> choiceDtos = questionDto.getChoices();
+            boolean statement = false;
+            List<InterviewedChoiceDto> interviewedChoiceDtos = interviewed.getInterviewedChoices();
+            for (InterviewedChoiceDto interviewedChoiceDto : interviewedChoiceDtos) {
+                for (ChoiceDto choiceDto : choiceDtos) {
+                    if (interviewedChoiceDto.getInterviewedChoiceId()
+                            .getChoice()
+                            .equals(choiceDto.getChoiceId())) {
+                        statement = true;
+                        break;
+                    }
+                }
+                if (statement) {
+                    break;
+                }
+            }
+            if (!statement) {
+                violations.add("You should set choice at question №" + index);
+            }
+            index++;
+        }
+        if (!violations.isEmpty()) {
+            throw new IllegalArgumentException(violations.toString()
+                    .replaceAll(",", ",\n"));
+        }
     }
 }

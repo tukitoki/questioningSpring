@@ -58,9 +58,11 @@ export class FormComponent implements OnInit {
 
   submitAttempt() {
     this.interviewed.interviewedIp = this.userIp;
+    this.interviewed.form = this.form;
     this.interviewedService.save(this.interviewed).subscribe({
-      next: next => {
-        this.router.navigate([`/attempts/${next.interviewedId}/`]);
+      next: next => this.router.navigate([`/attempts/${next.interviewedId}/`]),
+      error: (error: HttpErrorResponse) => {
+        Swal.fire(error.error.message)
       }
     });
   }
