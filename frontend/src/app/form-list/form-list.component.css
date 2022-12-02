@@ -1,0 +1,12 @@
+.clickable {
+  cursor: pointer;
+}
+td {
+  background-color: white;
+}
+.table tr:hover td {
+  background-color: rgba(0,0,0,.05);
+}
+.btn-delete {
+  float: right;
+}

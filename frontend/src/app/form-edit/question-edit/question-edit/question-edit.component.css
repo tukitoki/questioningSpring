@@ -1,0 +1,24 @@
+.input-group {
+    width: 800px;
+}
+h1 {
+    font-size: 130%;
+    margin: 0.5%;
+}
+.clickable {
+    margin: 0.5%;
+    cursor: pointer;
+}
+.add-choice {
+    margin-left: 4%;
+}
+.question-description {
+    height: 22%;
+}
+.choices-number {
+    margin-left: 2%;
+    width: 14%;
+}
+.edit-question {
+    margin-top: 4%;
+}

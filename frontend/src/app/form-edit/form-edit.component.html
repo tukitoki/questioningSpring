@@ -1,0 +1,17 @@
+<div class="edit-form">
+    <div class="input-group mb-3">
+        <input [(ngModel)]="form!.description" type="text" class="form-control" placeholder="Form description" aria-label="Form description" aria-describedby="basic-addon2">
+    </div>
+    <app-question-edit *ngFor="let question of form.questions, index as i"
+    [question]="question"
+    [form]="form"
+    [index]="i"> 
+    </app-question-edit>
+    <div class="input-group-append create-question">
+        <button class="btn btn-outline-secondary" type="button" (click)="createNewQuestion()">Create question</button>
+    </div>
+
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary create-form" type="button" (click)="submitForm()">Submit form</button>
+    </div>
+</div>

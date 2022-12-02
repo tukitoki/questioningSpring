@@ -1,0 +1,25 @@
+<div class="card my-5">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Form name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Ip</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="clickable"
+            (click)="toAttempt(attempt.interviewedId)"
+            *ngFor="let attempt of attempts">
+          <td>{{ attempt.interviewedId }}</td>
+          <td>{{ attempt.form!.description }}</td>
+          <td>{{ attempt.interviewedDate }}</td>
+          <td>{{ attempt.interviewedIp }} <a class="btn-delete">✖</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

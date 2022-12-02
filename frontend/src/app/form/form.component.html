@@ -1,0 +1,10 @@
+<div class="form">
+  <div class="form-description">{{ form!.description }}</div>
+  <app-question *ngFor="let question of form?.questions; index as i"
+                [question]="question"
+                [index]="i"
+                [allChoices]="interviewed.interviewedChoices"
+                [view]="view">
+  </app-question>
+  <a *ngIf="!view" class="btn btn-info" (click)="submitAttempt()">Submit</a>
+</div>

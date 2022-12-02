@@ -1,0 +1,7 @@
+<div class="choice">
+  <label class="form-check-label">
+    <input class="form-check-input" [checked]="selected == true" [disabled]="(selected == false && maxChoices <= selectedChoices.length) || view" 
+    type="checkbox" (click)="checkSelected($event)"/> 
+    {{ choice.description }}
+  </label>
+</div>

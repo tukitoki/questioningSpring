@@ -1,0 +1,11 @@
+<div class="question">
+  <div class="question-description">{{index + 1}}. {{ question.description }}</div>
+  <app-choice *ngFor="let choice of question.choices; index as i"
+              [choice]="choice"
+              [index]="i"
+              [maxChoices]="question.numberOfChoices"
+              [allChoices]="allChoices"
+              [selectedChoices]="selectedChoices"
+              [view]="view">
+  </app-choice>
+</div>

@@ -1,0 +1,7 @@
+<div class="edit-choice"> 
+    <div class="input-group mb-3">
+        <h1>{{ index + 1. }})</h1>
+        <input [(ngModel)]="choice.description" type="text" class="form-control" placeholder="Choice description" aria-label="Choice description" aria-describedby="basic-addon2">
+        <a (click)="deleteChoice()" class="btn-delete clickable">✖</a>
+    </div>
+</div>

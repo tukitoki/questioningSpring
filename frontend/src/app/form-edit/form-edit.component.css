@@ -1,0 +1,16 @@
+.create-question {
+    margin: 1%;
+}
+.edit-form {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 0.25rem;
+}
+.create-form {
+    margin-top: 2%;
+}
+.create-question {
+    margin-left: 45%;
+    margin-top: 5%;
+    position: relative;
+}

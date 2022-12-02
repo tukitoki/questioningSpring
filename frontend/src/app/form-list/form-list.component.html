@@ -1,0 +1,23 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="clickable"
+          (click)="toForm(form.formId)"
+          *ngFor="let form of forms">
+        <td>{{ form.formId }}</td>
+        <td>{{ form?.description }} 
+          <a (click)="deleteForm(form.formId)" class="btn-delete">✖</a> 
+          <a (click)="editForm(form)" class="btn-delete">✎</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
