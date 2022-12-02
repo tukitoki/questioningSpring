@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InterviewedService } from 'src/app/service/interviewed.service';
+import Swal from 'sweetalert2';
 import { Interviewed } from '../entity/interviewed';
 
 @Component({
@@ -22,9 +24,13 @@ export class AttemptComponent implements OnInit {
   }
 
   private getAttemptFromServer(id: number) {
-    this.interviewedService.getAttempt(id).subscribe(value => 
-      this.attempt = value
-    );
+    this.interviewedService.getAttempt(id).subscribe({
+      next: next => this.attempt = next,
+      error: (error: HttpErrorResponse) => {
+        Swal.fire(error.error.message);
+        this.router.navigate([`attempts`])
+      }
+    });
   }
 
 }
