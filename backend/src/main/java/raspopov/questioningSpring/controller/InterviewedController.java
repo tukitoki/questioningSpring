@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import raspopov.questioningSpring.dto.InterviewedDto;
 import raspopov.questioningSpring.service.InterviewedService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -20,10 +21,11 @@ public class InterviewedController {
     private final InterviewedService interviewedService;
 
     @PostMapping("/attempts")
-    public ResponseEntity<InterviewedDto> saveAttempt(@RequestBody InterviewedDto interviewed) {
+    public ResponseEntity<InterviewedDto> saveAttempt(@RequestBody InterviewedDto interviewed,
+                                                      HttpServletRequest request) {
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(interviewedService.saveAttempt(interviewed));
+                .body(interviewedService.saveAttempt(interviewed, request));
     }
 
     @GetMapping("/attempts")

@@ -3,7 +3,7 @@
         <h1>{{ index + 1 }}.</h1>
         <input [(ngModel)]="question.description" type="text" class="form-control question-description" placeholder="Question description" aria-label="Question description" aria-describedby="basic-addon2">
         <a (click)="deleteQuestion()" class="btn-delete clickable">✖</a>
-        <p>Choices number: <input class="choices-number" [(ngModel)]="question.numberOfChoices" type="number" step="1"></p>
+        <p>Choices number: <input class="choices-number" [(ngModel)]="question.numberOfChoices" type="number" step="1" min="0" max="8"></p>
     </div>
     <app-choice-edit *ngFor="let choice of question.choices; index as i"
     [choice]="choice"

@@ -12,9 +12,11 @@ import raspopov.questioningSpring.mapper.InterviewedMapper;
 import raspopov.questioningSpring.repository.InterviewedChoiceRepo;
 import raspopov.questioningSpring.repository.InterviewedRepo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +28,9 @@ public class InterviewedService {
 
     private final InterviewedChoiceRepo interviewedChoiceRepo;
 
-    public InterviewedDto saveAttempt(InterviewedDto interviewed) {
-        checkQuestionsChoices(interviewed);
+    public InterviewedDto saveAttempt(InterviewedDto interviewed, HttpServletRequest request) {
+        this.checkQuestionsChoices(interviewed);
+        interviewed.setInterviewedIp(this.getUserIp(request));
         InterviewedEntity interviewedEntity = interviewedMapper.toEntity(interviewed);
         interviewedEntity = interviewedRepo.save(interviewedEntity);
         interviewedChoiceRepo.saveAll(interviewedEntity.getInterviewedChoices());
@@ -78,4 +81,14 @@ public class InterviewedService {
                     .replaceAll(",", ",\n"));
         }
     }
+
+    private String getUserIp(HttpServletRequest request) {
+        String clientIp = Optional.ofNullable(request.getHeader("X-FORWARDED-FOR"))
+                .orElse(request.getRemoteAddr());
+        if (clientIp.equals("0:0:0:0:0:0:0:1")) {
+            clientIp = "127.0.0.1";
+        }
+        return clientIp;
+    }
+
 }
