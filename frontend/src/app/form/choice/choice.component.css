@@ -3,6 +3,14 @@
     margin-top: 1.5%;
     font-size: large;
 }
+.choice-block {
+    flex-direction: row;
+    display: flex;
+}
+.percentile {
+    margin-left: 8px;
+    color: red;
+}
 input {
     transform: scale(150%);
 }

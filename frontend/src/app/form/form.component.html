@@ -4,7 +4,8 @@
                 [question]="question"
                 [index]="i"
                 [allChoices]="interviewed.interviewedChoices"
-                [view]="view">
+                [view]="view"
+                [allIntervChoices]="interviewed.allInterviewedChoices">
   </app-question>
   <a *ngIf="!view" class="btn btn-info" (click)="submitAttempt()">Submit</a>
 </div>

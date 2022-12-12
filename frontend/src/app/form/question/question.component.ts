@@ -12,6 +12,7 @@ export class QuestionComponent implements OnInit {
   @Input() question!: Question;
   @Input() index!: number;
   @Input() allChoices!: InterviewedChoice[];
+  @Input() allIntervChoices!: InterviewedChoice[];
   selectedChoices!: (number | null)[];
   @Input() view!: boolean;
 

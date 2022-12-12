@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import raspopov.questioningSpring.dto.FormDto;
 import raspopov.questioningSpring.entity.ChoiceEntity;
 import raspopov.questioningSpring.entity.FormEntity;
+import raspopov.questioningSpring.entity.InterviewedEntity;
 import raspopov.questioningSpring.entity.QuestionEntity;
 
 import java.util.ArrayList;

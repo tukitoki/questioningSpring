@@ -1,0 +1,10 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" *ngFor="let size of [].constructor(page.totalPages); let i = index">
+        <a class="page-link"
+        [queryParams]="{ size: 10, page: i }"
+        [routerLink]="paginationUrl"
+        queryParamsHandling="merge">{{ i + 1 }}</a>
+      </li>
+    </ul>
+</nav>

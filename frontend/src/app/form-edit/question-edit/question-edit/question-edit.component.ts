@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Form } from 'src/app/entity/form';
 import { Question } from 'src/app/entity/question';
 
@@ -12,11 +13,9 @@ export class QuestionEditComponent implements OnInit {
   @Input() question!: Question;
   @Input() form!: Form;
   @Input() index!: number;
-
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
   createNewChoice() {

@@ -32,6 +32,10 @@ public class InterviewedEntity {
     )
     private Inet interviewedIp;
 
+    @ManyToOne
+    @JoinColumn(name = "form_id", nullable = false)
+    private FormEntity form;
+
     @OneToMany(mappedBy = "interviewed", cascade = CascadeType.MERGE)
     private List<InterviewedChoiceEntity> interviewedChoices;
 

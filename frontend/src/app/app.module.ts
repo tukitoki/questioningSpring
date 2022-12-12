@@ -15,6 +15,7 @@ import { QuestionEditComponent } from './form-edit/question-edit/question-edit/q
 import { ChoiceEditComponent } from './form-edit/choice-edit/choice-edit/choice-edit.component';
 import { AttemptComponent } from './attempt/attempt.component';
 import { AttemptListComponent } from './attempt-list/attempt-list.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AttemptListComponent } from './attempt-list/attempt-list.component';
     ChoiceEditComponent,
     AttemptComponent,
     AttemptListComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

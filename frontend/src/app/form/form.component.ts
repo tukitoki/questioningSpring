@@ -16,7 +16,6 @@ export class FormComponent implements OnInit {
 
   @Input() form!: Form;
   sumbitChoices!: number[];
-  userIp: any;
   @Input() interviewed!: Interviewed;
   @Input() view!: boolean;
 
@@ -24,7 +23,6 @@ export class FormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private http: HttpClient,
     private interviewedService: InterviewedService) {
   }
 
@@ -33,15 +31,13 @@ export class FormComponent implements OnInit {
     if (this.view == undefined) {
       this.view = false;
       this.getFormFromServer(this.route.snapshot.params['id'])
-      this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => 
-        this.userIp = res.ip
-      );
       this.interviewed = {
         form: this.form,
         interviewedId: null,
-        interviewedIp: this.userIp,
+        interviewedIp: '',
         interviewedDate: new Date,
-        interviewedChoices: []
+        interviewedChoices: [],
+        allInterviewedChoices: []
       };
     }
   }
@@ -57,7 +53,6 @@ export class FormComponent implements OnInit {
   }
 
   submitAttempt() {
-    this.interviewed.interviewedIp = this.userIp;
     this.interviewed.form = this.form;
     this.interviewedService.save(this.interviewed).subscribe({
       next: next => this.router.navigate([`/attempts/${next.interviewedId}/`]),

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import { Form } from '../entity/form';
 import {Observable} from "rxjs";
+import { Page } from '../entity/page';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,13 @@ export class FormService {
     this.formsUrl = 'http://localhost:8080/forms'
   }
 
-  public getAll(): Observable<Form[]> {
-    return this.http.get<Form[]>(this.formsUrl);
+  public getAll(description: string = '', page: number = 0, size: number = 10): Observable<Page<Form>> {
+    let params = {
+      'description': description,
+      'page': page,
+      'size': size
+    };
+    return this.http.get<Page<Form>>(`${this.formsUrl}`, { params: params });
   }
 
   public getForm(id: number | null): Observable<Form> {

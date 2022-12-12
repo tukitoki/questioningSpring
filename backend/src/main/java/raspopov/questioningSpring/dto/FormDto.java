@@ -1,19 +1,11 @@
 package raspopov.questioningSpring.dto;
 
-import com.vladmihalcea.hibernate.type.basic.Inet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,4 +22,15 @@ public class FormDto {
     @Valid
     private List<QuestionDto> questions;
 
+
+    public QuestionDto findQuestionToChoice(long choiceId) {
+        for (QuestionDto questionDto : questions) {
+            for (ChoiceDto choiceDto : questionDto.getChoices()) {
+                if (choiceDto.getChoiceId() == choiceId) {
+                    return questionDto;
+                }
+            }
+        }
+        return questions.get(0);
+    }
 }

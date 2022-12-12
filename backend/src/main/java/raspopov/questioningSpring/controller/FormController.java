@@ -1,7 +1,7 @@
 package raspopov.questioningSpring.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,6 @@ import raspopov.questioningSpring.dto.FormDto;
 import raspopov.questioningSpring.service.FormService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @RestController
@@ -42,8 +41,10 @@ public class FormController {
     }
 
     @GetMapping("/forms")
-    public ResponseEntity<List<FormDto>> getAllForms() {
-        return ResponseEntity.status(HttpStatus.OK).body(formService.findAllForms());
+    public ResponseEntity<Page<FormDto>> getAllForms(String description, int page, int size) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(formService.findAllForms(description, page, size));
     }
 
     @GetMapping("/forms/{formId}")

@@ -23,6 +23,7 @@ CREATE TABLE interviewed
 (
     interviewed_id   SERIAL NOT NULL PRIMARY KEY,
     interviewed_ip   CIDR   NOT NULL,
+    form_id          INT    NOT NULL REFERENCES form (form_id) ON DELETE CASCADE,
     interviewed_date TIMESTAMP
 );
 

@@ -3,16 +3,15 @@ package raspopov.questioningSpring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raspopov.questioningSpring.dto.ChoiceDto;
-import raspopov.questioningSpring.dto.InterviewedChoiceDto;
-import raspopov.questioningSpring.dto.InterviewedDto;
-import raspopov.questioningSpring.dto.QuestionDto;
+import raspopov.questioningSpring.dto.*;
+import raspopov.questioningSpring.entity.InterviewedChoiceId;
 import raspopov.questioningSpring.entity.InterviewedEntity;
 import raspopov.questioningSpring.mapper.InterviewedMapper;
 import raspopov.questioningSpring.repository.InterviewedChoiceRepo;
 import raspopov.questioningSpring.repository.InterviewedRepo;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -48,7 +47,26 @@ public class InterviewedService {
     public InterviewedDto getAttempt(Long interviewedId) {
         InterviewedEntity interviewedEntity = interviewedRepo.findById(interviewedId)
                 .orElseThrow(() -> new NoSuchElementException("No such attempt id"));
-        return interviewedMapper.toDto(interviewedEntity);
+        InterviewedDto interviewedDto = interviewedMapper.toDto(interviewedEntity);
+        List<InterviewedChoiceDto> interviewedChoiceDtos = new ArrayList<>();
+        int submitedChoices;
+        FormDto formDto = interviewedDto.getForm();
+        for (QuestionDto currQuestion : formDto.getQuestions()) {
+            submitedChoices = 0;
+            for (ChoiceDto choiceDto : currQuestion.getChoices()) {
+                submitedChoices += interviewedChoiceRepo
+                        .findPercentageOfChoice(choiceDto.getChoiceId());
+            }
+            for (ChoiceDto choiceDto : currQuestion.getChoices()) {
+                long currChoiceId = choiceDto.getChoiceId();
+                float counterOfCurrChoice = (float) interviewedChoiceRepo.findPercentageOfChoice(currChoiceId);
+                interviewedChoiceDtos.add(new InterviewedChoiceDto(
+                        new InterviewedChoiceId(interviewedId, currChoiceId),
+                        counterOfCurrChoice / submitedChoices * 100));
+            }
+        }
+        interviewedDto.setAllInterviewedChoices(interviewedChoiceDtos);
+        return interviewedDto;
     }
 
     private void checkQuestionsChoices(InterviewedDto interviewed) {

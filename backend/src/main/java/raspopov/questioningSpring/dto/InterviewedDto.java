@@ -22,6 +22,8 @@ public class InterviewedDto {
 
     private List<InterviewedChoiceDto> interviewedChoices;
 
+    private List<InterviewedChoiceDto> allInterviewedChoices;
+
     public String getInterviewedIp() {
         return this.interviewedIp.getAddress();
     }

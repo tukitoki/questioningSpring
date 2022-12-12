@@ -7,4 +7,5 @@ export interface Interviewed {
     interviewedDate: Date;
     interviewedIp: string;
     interviewedChoices: InterviewedChoice[];
+    allInterviewedChoices: InterviewedChoice[];
 }

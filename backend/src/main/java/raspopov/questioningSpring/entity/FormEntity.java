@@ -37,4 +37,6 @@ public class FormEntity {
     @Size(min = 2, max = 8, message = "Question count should be >= 2 and <= 8")
     private List<QuestionEntity> questions;
 
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    private List<InterviewedEntity> interviewedEntities;
 }

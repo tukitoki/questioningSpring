@@ -11,4 +11,6 @@ import raspopov.questioningSpring.entity.InterviewedChoiceId;
 public class InterviewedChoiceDto {
 
     private InterviewedChoiceId interviewedChoiceId;
+
+    private float percentileOfChoice;
 }

@@ -1,11 +1,11 @@
 package raspopov.questioningSpring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import raspopov.questioningSpring.dto.FormDto;
 import raspopov.questioningSpring.entity.FormEntity;
-import raspopov.questioningSpring.entity.InterviewedEntity;
 import raspopov.questioningSpring.mapper.FormMapper;
 import raspopov.questioningSpring.repository.FormRepo;
 import raspopov.questioningSpring.repository.InterviewedRepo;
@@ -39,27 +39,21 @@ public class FormService {
         });
     }
 
-    public List<FormDto> findAllForms() {
-        List<FormDto> list = new ArrayList<>();
-        formRepo.findAll().forEach(form -> {
-            list.add(formMapper.toDto(form));
-        });
-        return list;
+    public Page<FormDto> findAllForms(String description, int page, int size) {
+        Page<FormEntity> page1;
+        if (description == null || description.isBlank()) {
+            page1 = formRepo.findAll(PageRequest.of(page, size));
+        } else {
+            page1 = formRepo.findByDescription(description, PageRequest.of(page, size));
+        }
+        return page1.map(formMapper::toDto);
     }
 
     public void updateForm(Long id, FormDto newFormDto) {
         FormEntity oldForm = formRepo.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No such form id"));
         FormEntity newForm = formMapper.toEntity(newFormDto);
-        Set<InterviewedEntity> interviewedEntitySet = new HashSet<>();
-        oldForm.getQuestions().forEach(questionEntity -> {
-            questionEntity.getChoices().forEach(choiceEntity -> {
-                choiceEntity.getInterviewedChoices().forEach(interviewedChoiceEntity -> {
-                    interviewedEntitySet.add(interviewedChoiceEntity.getInterviewed());
-                });
-            });
-        });
-        interviewedRepo.deleteAll(interviewedEntitySet);
+        interviewedRepo.deleteAll(oldForm.getInterviewedEntities());
         oldForm.setQuestions(newForm.getQuestions());
         oldForm.setDescription(newForm.getDescription());
         formRepo.save(oldForm);
