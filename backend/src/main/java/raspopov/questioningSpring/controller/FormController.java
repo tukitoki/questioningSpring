@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import raspopov.questioningSpring.dto.FormDto;
+import raspopov.questioningSpring.entity.FormEntity;
 import raspopov.questioningSpring.service.FormService;
 
 import javax.validation.Valid;
@@ -35,9 +36,11 @@ public class FormController {
 
     @PutMapping("/forms/{formId}")
     public ResponseEntity<Void> updateForm(@PathVariable Long formId,
-                                           @RequestBody @Valid FormDto formDto) {
+                                                 @RequestBody @Valid FormDto formDto) {
         formService.updateForm(formId, formDto);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 
     @GetMapping("/forms")

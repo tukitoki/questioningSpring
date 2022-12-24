@@ -53,7 +53,7 @@ export class FormListComponent implements OnInit {
   
   deleteForm(id: number | null) {
     this.formService.delete(id).subscribe(
-      result => this.router.navigate(["forms/"])
+      result => this.router.navigate([`forms/`])
     );
   }
 

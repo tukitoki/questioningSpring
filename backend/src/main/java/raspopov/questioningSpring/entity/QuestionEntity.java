@@ -1,6 +1,7 @@
 package raspopov.questioningSpring.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,7 @@ public class QuestionEntity {
     @JoinColumn(name = "form_id", nullable = false)
     private FormEntity form;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @Size(min = 2, max = 8, message = "Choices count should be >= 2 and <= 8")
     private List<ChoiceEntity> choices;
 }

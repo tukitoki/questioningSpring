@@ -16,10 +16,14 @@
           <td>{{ attempt.interviewedId }}</td>
           <td>{{ attempt.form!.description }}</td>
           <td>{{ attempt.interviewedDate }}</td>
-          <td>{{ attempt.interviewedIp }} <a class="btn-delete">✖</a></td>
+          <td>{{ attempt.interviewedIp }}</td>
         </tr>
         </tbody>
       </table>
+      <app-pagination 
+        [page]="page"
+        [paginationUrl]="[]">
+      </app-pagination>
     </div>
   </div>
   

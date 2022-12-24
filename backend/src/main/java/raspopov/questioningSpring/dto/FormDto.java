@@ -21,16 +21,4 @@ public class FormDto {
     @Size(min = 2, max = 8, message = "Question count should be >= 2 and <= 8")
     @Valid
     private List<QuestionDto> questions;
-
-
-    public QuestionDto findQuestionToChoice(long choiceId) {
-        for (QuestionDto questionDto : questions) {
-            for (ChoiceDto choiceDto : questionDto.getChoices()) {
-                if (choiceDto.getChoiceId() == choiceId) {
-                    return questionDto;
-                }
-            }
-        }
-        return questions.get(0);
-    }
 }

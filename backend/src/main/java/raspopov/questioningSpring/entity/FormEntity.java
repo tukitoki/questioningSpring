@@ -1,5 +1,6 @@
 package raspopov.questioningSpring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.basic.Inet;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLInetType;
 import lombok.Data;
@@ -33,10 +34,10 @@ public class FormEntity {
     @NotBlank(message = "Form description should not be empty")
     private String description;
 
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
     @Size(min = 2, max = 8, message = "Question count should be >= 2 and <= 8")
     private List<QuestionEntity> questions;
 
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InterviewedEntity> interviewedEntities;
 }

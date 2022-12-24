@@ -1,5 +1,6 @@
 package raspopov.questioningSpring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,6 @@ public class ChoiceEntity {
     @JoinColumn(name = "question_id", nullable = false)
     private QuestionEntity question;
 
-    @OneToMany(mappedBy = "choice", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "choice", cascade = CascadeType.MERGE)
     private List<InterviewedChoiceEntity> interviewedChoices;
 }

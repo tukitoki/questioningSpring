@@ -2,6 +2,7 @@ package raspopov.questioningSpring.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,8 @@ public class InterviewedController {
     }
 
     @GetMapping("/attempts")
-    public ResponseEntity<List<InterviewedDto>> getAttempts() {
-        return ResponseEntity.status(HttpStatus.OK).body(interviewedService.getAttempts());
+    public ResponseEntity<Page<InterviewedDto>> getAttempts(int page, int size) {
+        return ResponseEntity.status(HttpStatus.OK).body(interviewedService.getAttempts(page, size ));
     }
 
     @GetMapping("/attempts/{attemptId}")

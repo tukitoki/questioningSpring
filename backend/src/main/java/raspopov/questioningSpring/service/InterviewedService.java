@@ -2,6 +2,8 @@ package raspopov.questioningSpring.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import raspopov.questioningSpring.dto.*;
 import raspopov.questioningSpring.entity.InterviewedChoiceId;
@@ -11,7 +13,6 @@ import raspopov.questioningSpring.repository.InterviewedChoiceRepo;
 import raspopov.questioningSpring.repository.InterviewedRepo;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,12 +37,10 @@ public class InterviewedService {
         return interviewedMapper.toDto(interviewedEntity);
     }
 
-    public List<InterviewedDto> getAttempts() {
-        List<InterviewedDto> interviewedDtos = new ArrayList<>();
-        interviewedRepo.findAll().forEach(interviewed -> {
-            interviewedDtos.add(interviewedMapper.toDto(interviewed));
-        });
-        return interviewedDtos;
+    public Page<InterviewedDto> getAttempts(int page, int size) {
+        Page<InterviewedEntity> page1 = interviewedRepo.findAll(PageRequest.of(page, size));
+
+        return page1.map(interviewedMapper::toDto);
     }
 
     public InterviewedDto getAttempt(Long interviewedId) {
